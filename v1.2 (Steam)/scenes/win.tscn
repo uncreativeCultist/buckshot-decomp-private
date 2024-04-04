@@ -1,0 +1,179 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/MouseRaycast.gd" id="1"]
+[ext_resource type="Shader" path="res://main player/vignette.gdshader" id="2"]
+[ext_resource type="Shader" path="res://main player/posterization test.gdshader" id="3"]
+[ext_resource type="Material" uid="uid://1cc5f0tvkdn5" path="res://main player/mat_color precision.tres" id="4"]
+[ext_resource type="Material" uid="uid://cbt5cvhck0euq" path="res://main player/mat_dithering.tres" id="5"]
+[ext_resource type="Material" uid="uid://cdrlcynkcj7w6" path="res://main player/test shader.tres" id="6"]
+[ext_resource type="Texture2D" uid="uid://jy645oarlh6d" path="res://misc/playtest win screen.png" id="7"]
+[ext_resource type="AudioStream" uid="uid://ds7ft04ivbc8f" path="res://audio/playtest win.ogg" id="8"]
+
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("2")
+shader_parameter/vignette_intensity = 0.075
+shader_parameter/vignette_opacity = 1.0
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+script = null
+
+[sub_resource type="ShaderMaterial" id="2"]
+shader = ExtResource("3")
+shader_parameter/SCREEN_WIDTH = 1920.0
+shader_parameter/RED_COMPONENT = 7.0
+shader_parameter/GREEN_COMPONENT = 7.0
+shader_parameter/BLUE_COMPONENT = 7.0
+script = null
+
+[node name="win" type="Node3D"]
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-3.61999e-06, 0.25038, -0.968148, 0, 0.968148, 0.25038, 1, 9.06374e-07, -3.50469e-06, -13.5898, 7.32321, 0.0237952)
+fov = 65.5
+script = ExtResource("1")
+
+[node name="post processing" type="Node" parent="Camera"]
+
+[node name="vignette" type="Control" parent="Camera/post processing"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -3.05176e-05
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera/post processing/vignette"]
+position = Vector2(482, 270)
+scale = Vector2(4.87, 2.75)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Camera/post processing/vignette/BackBufferCopy"]
+visible = false
+material = SubResource("1")
+offset_left = -99.0
+offset_top = -98.0
+offset_right = 140.0
+offset_bottom = 138.0
+rotation = 0.00159616
+mouse_filter = 2
+
+[node name="posterization test" type="Control" parent="Camera/post processing"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera/post processing/posterization test"]
+position = Vector2(482, 270)
+scale = Vector2(4.87, 2.75)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Camera/post processing/posterization test/BackBufferCopy"]
+material = SubResource("2")
+offset_left = -99.0
+offset_top = -98.0
+offset_right = 140.0
+offset_bottom = 139.0
+mouse_filter = 2
+
+[node name="color precision" type="Control" parent="Camera/post processing"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera/post processing/color precision"]
+position = Vector2(482, 270)
+scale = Vector2(4.87, 2.75)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Camera/post processing/color precision/BackBufferCopy"]
+material = ExtResource("4")
+offset_left = -98.9733
+offset_top = -98.1818
+offset_right = 865.027
+offset_bottom = 446.818
+mouse_filter = 2
+
+[node name="dithering" type="Control" parent="Camera/post processing"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera/post processing/dithering"]
+visible = false
+position = Vector2(482, 270)
+scale = Vector2(4.87, 2.75)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Camera/post processing/dithering/BackBufferCopy"]
+visible = false
+material = ExtResource("5")
+offset_left = -98.9733
+offset_top = -98.1818
+offset_right = 865.027
+offset_bottom = 446.818
+mouse_filter = 2
+
+[node name="test" type="Control" parent="Camera/post processing"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Camera/post processing/test"]
+position = Vector2(482, 270)
+scale = Vector2(4.87, 2.75)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Camera/post processing/test/BackBufferCopy"]
+material = ExtResource("6")
+offset_left = -98.9733
+offset_top = -98.1818
+offset_right = 865.027
+offset_bottom = 446.818
+mouse_filter = 2
+
+[node name="dialogue UI" type="Node" parent="Camera"]
+
+[node name="death screen" type="Control" parent="Camera/dialogue UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Camera/dialogue UI/death screen"]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+texture = ExtResource("7")
+expand_mode = 1
+
+[node name="viewblocker parent" type="Control" parent="Camera/dialogue UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="viewblcoker" type="ColorRect" parent="Camera/dialogue UI/viewblocker parent"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -3.0
+offset_right = 972.0
+offset_bottom = 553.0
+color = Color(0, 0, 0, 0)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8")
+autoplay = true
+panning_strength = 0.0

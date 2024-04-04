@@ -9,6 +9,7 @@ I own no assets contained in this repo.
 
 **IF MIKE KLUBNIKA ASKS, THIS REPO WILL BE TAKEN DOWN UPON REQUEST.**
 ## Notes
+- Thank you to [Stigstille](https://stigstille.uk/) for providing a steam key <3
 - Files are highly compressed in .7z format due to file size restrictions.
 - The source code's ```main.tcsn``` files are compressed due to file size restrictions.
 - I might've screwed up the source code on the Github repo. Releases will be unaffected, however I just thought it was important to let you all know.
